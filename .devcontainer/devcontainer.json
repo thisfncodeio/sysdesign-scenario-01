@@ -37,7 +37,7 @@
     }
   },
 
-  "postStartCommand": "npm install && until pg_isready -h postgres -U postgres; do sleep 1; done && node db/seed.js && echo '\n✅ Ready. Open SCENARIO.md to start.'",
+  "postStartCommand": "npm install && node scripts/wait-and-seed.js",
 
   "postAttachCommand": "code SCENARIO.md"
 }
