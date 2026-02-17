@@ -1,13 +1,10 @@
 {
   "name": "System Design — Scenario 1: The Single Server Problem",
 
-  // Use Docker Compose to spin up the full environment:
-  // app, postgres, prometheus, grafana
   "dockerComposeFile": "../docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/app",
 
-  // Forward ports so the learner can access everything in the browser
   "forwardPorts": [3000, 3002, 9090],
   "portsAttributes": {
     "3000": {
@@ -24,31 +21,23 @@
     }
   },
 
-  // VS Code extensions pre-installed for the learner
   "customizations": {
     "vscode": {
       "extensions": [
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "mtxr.sqltools",
-        "mtxr.sqltools-driver-pg",
-        "ckolkman.vscode-postgres",
         "streetsidesoftware.code-spell-checker"
       ],
       "settings": {
         "editor.fontSize": 14,
         "editor.tabSize": 2,
         "editor.formatOnSave": true,
-        "terminal.integrated.defaultProfile.linux": "bash",
-        // Open the exercise panel on the right side
-        "workbench.panel.defaultLocation": "bottom"
+        "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
   },
 
-  // Run automatically when the container starts
-  "postStartCommand": "npm install && node db/seed.js && echo '\n✅ Environment ready. Open the SCENARIO.md file to get started.'",
+  "postStartCommand": "npm install && until pg_isready -h postgres -U postgres; do sleep 1; done && node db/seed.js && echo '\n✅ Ready. Open SCENARIO.md to start.'",
 
-  // Open the scenario guide automatically on launch
   "postAttachCommand": "code SCENARIO.md"
 }
