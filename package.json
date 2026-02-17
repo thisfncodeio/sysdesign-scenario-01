@@ -1,0 +1,21 @@
+{
+  "name": "scenario-01-single-server",
+  "version": "1.0.0",
+  "description": "System Design Scenario 1: The Single Server Problem",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "seed": "node db/seed.js",
+    "loadtest": "node scripts/loadtest.js",
+    "apply-fix": "psql postgresql://postgres:postgres@postgres:5432/feedapp -f db/fix.sql",
+    "explain-query": "psql postgresql://postgres:postgres@postgres:5432/feedapp -c 'EXPLAIN ANALYZE SELECT * FROM posts ORDER BY created_at DESC LIMIT 20;'"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "prom-client": "^15.1.0"
+  },
+  "devDependencies": {
+    "autocannon": "^7.14.0"
+  }
+}
